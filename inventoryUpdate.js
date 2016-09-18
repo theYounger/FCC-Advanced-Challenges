@@ -25,24 +25,33 @@ function updateInventory(arr1, arr2) {
   }
 
   function invUpdater(currInv, addInv) {
-    var unMatched;
-    for(var i = 0; i < currInv.length; i++) {
+    var unmatched;
+    var unmatchedArr = [];
+    var matchedArr = [];
+    var i;
+
+    for(i = 0; i < currInv.length; i++) {
       var match = addInv.find(itemMatcher);
-      console.log(match, 'MATCH');
       if(match === undefined) {
-        currInv.push(unMatched);
+        unmatchedArr.push(unmatched);
       } else {
         currInv[i] = [currInv[i][0] + match[0], match[1]];
+        matchedArr.push(match[1]);
       }
-
+      console.log(currInv, i, 'CURR INV @ ' + i);
+      console.log(unmatchedArr, i, 'CURR INV @ ' + i);
     }
 
     function itemMatcher(addItem) {
-      if(addItem[1] === currInv[i][1])
+      if(addItem[1] === currInv[i][1]) {
         return addItem[1] === currInv[i][1];
       }
-      unMatched = addItem;
+      if(unmatchedArr.indexOf(addItem) === -1 && matchedArr.indexOf(addItem[1]) === -1) {
+        unmatched = addItem;
+      }
     }
+    var result = currInv.concat(unmatchedArr);
+    console.log('result', result);
   }
   invUpdater(arr1, arr2);
 }
