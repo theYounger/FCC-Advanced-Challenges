@@ -24,22 +24,33 @@ function updateInventory(arr1, arr2) {
     });
   }
 
+  return invUpdater(arr1, arr2);
+
   function invUpdater(currInv, addInv) {
     var unmatched;
     var unmatchedArr = [];
     var matchedArr = [];
     var i;
 
-    for(i = 0; i < currInv.length; i++) {
-      var match = addInv.find(itemMatcher);
-      if(match === undefined) {
-        unmatchedArr.push(unmatched);
-      } else {
-        currInv[i] = [currInv[i][0] + match[0], match[1]];
-        matchedArr.push(match[1]);
+    if(currInv.length === 0) {
+      return currInv.concat(addInv).sort(itemNameCompare);
+    }
+
+    if(addInv.length === 0) {
+      return currInv.sort(itemNameCompare);
+    }
+
+    if(currInv.length >= addInv.length) {
+      for(i = 0; i < currInv.length; i++) {
+        var match = addInv.find(itemMatcher);
+        if(match === undefined) {
+          unmatchedArr.push(unmatched);
+        } else {
+          currInv[i] = [currInv[i][0] + match[0], match[1]];
+          matchedArr.push(match[1]);
+        }
       }
-      console.log(currInv, i, 'CURR INV @ ' + i);
-      console.log(unmatchedArr, i, 'CURR INV @ ' + i);
+      return currInv.concat(unmatchedArr).sort(itemNameCompare);
     }
 
     function itemMatcher(addItem) {
@@ -50,10 +61,20 @@ function updateInventory(arr1, arr2) {
         unmatched = addItem;
       }
     }
-    var result = currInv.concat(unmatchedArr);
-    console.log('result', result);
+
+
+    function itemNameCompare(a, b) {
+      if(a[1] <  b[1]) {
+        return -1;
+      }
+      if(a[1] > b[1]) {
+        return 1;
+      }
+      if(a[1] === b[1]) {
+        return 0;
+      }
+    }
   }
-  invUpdater(arr1, arr2);
 }
 
 // Example inventory lists
@@ -71,4 +92,7 @@ var addInv = [
     [7, "Toothpaste"]
 ];
 
-updateInventory(currInv, addInv);
+var updated = updateInventory([[21, "Bowling Ball"], [2, "Dirty Sock"], [1, "Hair Pin"], [5, "Microphone"]], []);
+console.log('updated', updated);
+
+// updateInventory(currInv, addInv);
