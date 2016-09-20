@@ -37,10 +37,16 @@ function makeFriendlyDates(arr) {
       if(endMo - beginMo === 0) {
         endMonth = '';
       }
+      if(begin[0] === '2016') {
+        beginYear = '';
+      }
     }
     if(end[0] - begin[0] === 1) {
       if(endMo - beginMo < 0) {
         endYear = '';
+        if(begin[0] === '2016') {
+          beginYear = '';
+        }
       }
       if(endMo - beginMo === 0) {
         if(end[2] - begin[2] < 0) {
@@ -48,15 +54,14 @@ function makeFriendlyDates(arr) {
         }
       }
     }
-    if(begin[0] === '2016') {
-      beginYear = '';
-    }
 
     begin[2] = ordinalizeDay(begin[2]);
     end[2] = ordinalizeDay(end[2]);
-
-    ordinalDate = [`${begin[1]} ${begin[2]}${beginYear}`, `${endMonth}${end[2]}${endYear}`];
-    console.log(begin, end);
+    if(arr[0] === arr[1]) {
+      ordinalDate = [`${begin[1]} ${begin[2]}${beginYear}`]
+    } else {
+      ordinalDate = [`${begin[1]} ${begin[2]}${beginYear}`, `${endMonth}${end[2]}${endYear}`];
+    }
     return ordinalDate;
   }
 
@@ -82,4 +87,4 @@ function makeFriendlyDates(arr) {
   }
 }
 
-console.log(makeFriendlyDates(["2016-12-01", "2017-02-03"]) );
+console.log(makeFriendlyDates(["2018-01-13", "2018-01-13"]));
