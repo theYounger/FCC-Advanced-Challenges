@@ -1,27 +1,33 @@
 function checkCashRegister(price, cash, cid) {
   function changeBills(bills) {
-    console.log('making bills');
+    if(bills / 100 >= 1) {
+    }
+    if(bills / 20 >= 1) {
+
+    }
+    if(bills / 10 >= 1) {
+
+    }
+    if(bills / 5 >= 1)
   }
 
   function changeCoins(coins) {
     console.log('making coins');
   }
 
-  function checkDivisibility(change) {
-    cid.forEach()
+  function checkCid(cashType, cashAmount) {
+    var registerTab = cid.find(function(element) {
+      return element[0] = cashType;
+    });
+
+    if(registerTab[1] >= cashAmount) {
+      changeArray.push([cashType, cashAmount]);
+    } else {
+      changeArray.push([cashType, cashAmount - registerTab[1]]);
+    }
   }
 
-  var changeModel = {
-    "ONE HUNDRED": 0,
-    "TWENTY": 0,
-    "TEN": 0,
-    "FIVE": 0,
-    "ONE": 0,
-    "QUARTER": 0,
-    "DIME": 0,
-    "NICKEL": 0,
-    "PENNY": 0
-  };
+  var changeArray = [];
   var change = cash - price;
   console.log('change', change);
   var bills = Math.floor(change);
@@ -40,7 +46,8 @@ function checkCashRegister(price, cash, cid) {
       changeBills(bills);
     }
     if(coins > 0) {
-      return changeCoins(coins);
+      changeCoins(coins);
+      return;
     }
   }
 
